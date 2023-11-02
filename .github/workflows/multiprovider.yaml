@@ -83,6 +83,17 @@ jobs:
     - name: Step 05 - Terraform Init
       run : terraform -chdir=./terraform/azure init -input=false
 
+- name: Step 06 - Terraform Unit Test
+      run : terraform -chdir=./terraform validate
+
+    - name: Step 07 - Terraform Plan with Contract Test
+      run : terraform -chdir=./terraform plan -input=false -out tfplan
+
+    - name: Step 08 - Terraform Security Scanning Setup
+      run : pip3 install checkov
+
+    - name: Step 09 - Terraform Security Scanning Run
+      run : checkov --directory ./terraform
     - name: Step 06 - Terraform Validate
       run : terraform -chdir=./terraform/azure validate
 
